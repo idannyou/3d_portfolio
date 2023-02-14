@@ -56,12 +56,29 @@ scene.add(ambientLight, gridHelper);
 // OrbitControls allows interaction 3D
 const controls = new OrbitControls(camera, renderer.domElement);
 
+function addStar() {
+  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geometry, material);
+
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
+}
+
+// Add 200 stars
+Array(200).fill().forEach(addStar);
+
 function animate() {
   // The window.requestAnimationFrame() method tells the browser
   // that you wish to perform an animation and requests
   // that the browser calls a specified function
   // to update an animation before the next repaint.
   requestAnimationFrame(animate);
+
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
