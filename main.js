@@ -1,10 +1,8 @@
 import './style.css';
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new THREE.Scene();
-
 const camera = new THREE.PerspectiveCamera(
   // 75 is the view based of off 360
   75,
@@ -54,9 +52,6 @@ pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 
 scene.add(ambientLight, pointLight);
-
-// OrbitControls allows interaction 3D
-// const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
@@ -121,6 +116,14 @@ function moveCamera() {
 }
 
 document.body.onscroll = moveCamera;
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', onWindowResize);
 
 function animate() {
   // The window.requestAnimationFrame() method tells the browser
